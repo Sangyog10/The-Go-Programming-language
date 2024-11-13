@@ -23,4 +23,3 @@ func main(){
 func alternative(){
 	fmt.Println(strings.Join(os.Args[1:], " "))
 }
-
