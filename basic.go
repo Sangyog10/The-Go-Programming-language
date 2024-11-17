@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
-	"time"
+	// "strings"
+	// "time"
 )
 
 func main() {
 	// fmt.Println("Command line arguments path:",os.Args[0]) //gives the path of program
 	fmt.Println("Command line arguments:", os.Args[1:])
+	user_input()
 
 	// $go run index.go hello world
 	// output: Command line arguments: [hello world]
@@ -61,4 +62,13 @@ func main() {
 	start2 := time.Now()
 	fmt.Println(strings.Join(os.Args[1:], " "))
 	fmt.Printf("Time taken with `strings.Join`: %v\n", time.Since(start2))
+}
+
+
+//taking input from user
+func user_input(){
+	fmt.Println("Enter your name:")
+	var name string
+	fmt.Scanln(&name)
+	fmt.Println("Your name is: ", name)
 }
