@@ -19,3 +19,5 @@ func main() {
     c := Circle{Radius: 5}
     fmt.Printf("Area of the circle: %.2f\n", c.Area())
 }
+
+// Methods are declared with a special receiver argument placed between the func keyword and the method name
