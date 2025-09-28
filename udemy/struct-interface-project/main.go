@@ -2,11 +2,26 @@ package main
 
 import (
 	"bufio"
-	"example.com/note/note"
 	"fmt"
 	"os"
 	"strings"
+
+	"example.com/note/note"
+	"example.com/note/todo"
 )
+
+type Saver interface {
+	Save() error
+}
+
+// type Displayer interface {
+// 	Display()
+// }
+
+type Outputable interface {
+	Saver
+	Display()
+}
 
 func main() {
 	title, content := getNoteData()
@@ -16,12 +31,37 @@ func main() {
 		return
 	}
 
-	userNote.DisplayNote()
-	err = userNote.SaveNote()
+	todoText := getUserInput("Todo list")
+	todo, err := todo.New(todoText)
 	if err != nil {
-		fmt.Println("Saving note failed")
+		fmt.Print(err)
+		return
 	}
-	fmt.Println("Saving the note succeded")
+
+	err = outputData(todo)
+	if err != nil {
+		fmt.Print(err)
+		return
+	}
+
+	err = outputData(userNote)
+
+}
+
+func outputData(data Outputable) error {
+	data.Display()
+	return saveData(data)
+
+}
+
+func saveData(data Saver) error {
+	err := data.Save()
+	if err != nil {
+		fmt.Println("Saving  failed")
+		return err
+	}
+	fmt.Println("Saving succeded")
+	return nil
 }
 
 func getNoteData() (string, string) {
